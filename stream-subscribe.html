@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('stream-subscribe', {
+        category: 'Device streams',
+        color: '#CCFFFF',
+        defaults: {
+            api: { value: "", type:"raptor-config" },
+            soid: { value: "", required: false },
+            name: { value: "" },
+            stream: { value: "" }
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: "white-globe.png",
+        label: function () {
+
+            var label = null;
+
+            if(this.name) {
+                label = this.name + (this.stream ? "." + this.stream : "")
+            }
+
+            if(!label) {
+                label = this.stream ? this.stream : 'stream';
+            }
+            
+            var soid = this.soid ? this.soid : null;
+
+            if(!soid && this.api) {
+                var _config = RED.nodes.node(this.api);
+                soid = _config.soid ? _config.soid : null;
+            }
+
+            if(!label) {
+                label = soid ? soid.substr(0, 5) + '..' : null;
+            }
+
+            return 'sub:'+label;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="stream-subscribe">
+
+    <div class="form-row">
+        <label for="node-input-api"><i class="icon-tag"></i> API</label>
+        <input type="text" id="node-input-api" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-soid"><i class="icon-tag"></i> SOID</label>
+        <input type="text" id="node-input-soid" placeholder="Service Object ID">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-stream"><i class="icon-tag"></i> Stream</label>
+        <input type="text" id="node-input-stream" placeholder="Stream">
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="stream-subscribe">
+
+    <p>Subscribe to a Service Object stream and listen for updates</p>
+
+</script>

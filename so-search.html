@@ -1,0 +1,82 @@
+<script type="text/javascript">
+    RED.nodes.registerType('so-search', {
+        category: 'Device',
+        color: '#CCFFFF',
+        defaults: {
+            api: { value: "", type:"raptor-config" },
+            query: { value: "", required: false },
+            name: { value: "", required: false },
+            description: { value: "", required: false },
+            singleitem: { value: true, required: false }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "arrow-in.png",
+        label: function () {
+
+            var label = null;
+
+            if(this.name) {
+                label = this.name;
+            }
+
+            if(!label) {
+                if(this.description) {
+                    label = this.description;
+                }
+            }
+            
+            if(!label) {
+                if(this.query) {
+                    label = this.query;
+                }
+            }
+            
+            return 'search:'+label;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="so-search">
+
+    <div class="form-row">
+        <label for="node-input-api"><i class="icon-tag"></i> API</label>
+        <input type="text" id="node-input-api" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <p>Search parameters</p>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-query"><i class="icon-tag"></i> Query</label>
+        <input type="text" id="node-input-query" placeholder="Query">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-description"><i class="icon-tag"></i> Description</label>
+        <input type="text" id="node-input-description" placeholder="Description">
+    </div>
+    
+    <hr />
+    
+    <div class="form-row">
+        <label for="node-input-singleitem"><i class="icon-tag"></i> Send a message for each item</label>
+        <input type="checkbox" id="node-input-singleitem" >
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="so-search">
+
+    <p>Search for a Service Object based on it's definition</p>
+    
+    <p>Query can contain `*` for wildcard matching. <br /> 
+        For name and description any element containing a matching result will return.</p>
+    
+</script>

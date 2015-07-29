@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('so-action', {
+        category: 'Device',
+        color: '#CCFFFF',
+        defaults: {
+            api: { value: "", type:"raptor-config" },
+            soid: { value: "", required: false},
+            name: { value: "" },
+            body: { value: "" }
+        },
+        inputs: 1,
+        outputs: 0,
+        icon: "arrow-in.png",
+        label: function () {
+
+            var label = null;
+
+            if(this.name) {
+                label = this.name + (this.stream ? "." + this.stream : "")
+            }
+
+            var soid = this.soid ? this.soid : null;
+
+            if(!soid && this.api) {
+                var _config = RED.nodes.node(this.api);
+                soid = _config.soid ? _config.soid : null;
+            }
+
+            if(!label) {
+                label = soid ? soid.substr(0, 5) + '..' : null;
+            }
+
+            if(!label) {
+                label = "ServiceObject";
+            }
+
+            return 'act:'+label;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="so-action">
+
+    <div class="form-row">
+        <label for="node-input-api"><i class="icon-tag"></i> API</label>
+        <input type="text" id="node-input-api" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-soid"><i class="icon-tag"></i> SOID</label>
+        <input type="text" id="node-input-soid" placeholder="">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="action name">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-body"><i class="icon-tag"></i> Body</label>
+        <input type="text" id="node-input-body" placeholder="action payload">
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="so-action">
+
+    <p>Execute an actuation on a Service Object</p>
+    
+</script>

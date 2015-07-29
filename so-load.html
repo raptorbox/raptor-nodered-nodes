@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    RED.nodes.registerType('so-load', {
+        category: 'Device',
+        color: '#CCFFFF',
+        defaults: {
+            api: { value: "", type:"raptor-config" },
+            singleitem: { value: true, required: false }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "arrow-in.png",
+        label: function () {
+
+            var label = null;
+
+            if(this.name) {
+                label = this.name + (this.stream ? "." + this.stream : "")
+            }
+
+            var soid = this.soid ? this.soid : null;
+
+            if(!soid && this.api) {
+                var _config = RED.nodes.node(this.api);
+                soid = _config.soid ? _config.soid : null;
+            }
+
+            if(!label) {
+                label = soid ? soid.substr(0, 5) + '..' : null;
+            }
+
+            if(!label) {
+                label = "ServiceObject";
+            }
+
+            return 'load:'+label;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="so-load">
+
+    <div class="form-row">
+        <label for="node-input-api"><i class="icon-tag"></i> API</label>
+        <input type="text" id="node-input-api" placeholder="">
+    </div>
+
+    <hr />
+
+    <div class="form-row">
+        <label for="node-input-singleitem"><i class="icon-tag"></i> Send a message for each item</label>
+        <input type="checkbox" id="node-input-singleitem" >
+    </div>
+    
+</script>
+
+<script type="text/x-red" data-help-name="so-load">
+
+    <p>Load one or more Service Object definition from the message payload and return a message with their JSON definition</p>
+    
+</script>

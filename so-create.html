@@ -1,0 +1,66 @@
+<script type="text/javascript">
+    RED.nodes.registerType('so-create', {
+        category: 'Device',
+        color: '#CCFFFF',
+        defaults: {
+            api: { value: "", type:"raptor-config" },
+            name: { value: "Device", required: false },
+            definition: { value: "", required: true }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "arrow-in.png",
+        label: function () {
+
+            var label = null;
+
+            if(this.name) {
+                label = this.name;
+            }
+
+            if(!label) {
+                try {
+                    var obj = JSON.parse(this.definition);
+                    if(obj.name) {
+                        label = obj.name;
+                    }
+                }
+                catch(e) {}
+            }
+
+            if(!label) {
+                label = "Device";
+            }
+
+            return 'create:'+label;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="so-create">
+
+    <div class="form-row">
+        <label for="node-input-api"><i class="icon-tag"></i> API</label>
+        <input type="text" id="node-input-api" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" >
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-definition"><i class="icon-tag"></i> JSON definition</label>
+        <textarea id="node-input-definition"></textarea>
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="so-create">
+
+    <p>
+        Creates a service object based on the provided definition. <br />
+        Can be provided via form field or `msg.payload`
+    </p>
+
+</script>

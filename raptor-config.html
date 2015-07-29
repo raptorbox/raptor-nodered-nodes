@@ -1,0 +1,74 @@
+<script type="text/javascript">
+    RED.nodes.registerType('raptor-config', {
+        category: 'config',
+        defaults: {
+            url: {
+                value: Raptor && Raptor.url ? Raptor.url() : "https://api.raptorbox.eu",
+                required: true
+            },
+            apiKey: {
+                value: "",
+                required: true
+            },
+            transport: {
+                value: "http",
+                required: true
+            },
+            soid: {
+                value: "",
+                required: false
+            },
+            name: {
+                value: "",
+                required: false
+            },
+        },
+        label: function () {
+
+            var label = this.name || null;
+
+            if(!label) {
+                label = this.soid ? this.soid.substr(0,4) + ".." + this.soid.substr(this.soid.length - 4) : null;
+            }
+
+            if(!label) {
+                label = this.apiKey ? this.apiKey.substr(0,4) + ".." + this.apiKey.substr(this.apiKey.length - 4) : 'Raptor API';
+            }
+
+            return label;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="raptor-config">
+
+    <div class="form-row">
+        <label for="node-config-input-apiKey"><i class="icon-bookmark"></i> Api Key</label>
+        <input type="text" id="node-config-input-apiKey">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-url"><i class="icon-bookmark"></i> Url</label>
+        <input type="text" id="node-config-input-url">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-transport"><i class="icon-bookmark"></i> Transport</label>
+        <select id="node-config-input-transport">
+            <option value="http">http</option>
+            <option value="mqtt">mqtt</option>
+            <option value="stomp">stomp</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-soid"><i class="icon-tag"></i> SOID</label>
+        <input type="text" id="node-config-input-soid" placeholder="Service Object ID">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-bookmark"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+
+</script>

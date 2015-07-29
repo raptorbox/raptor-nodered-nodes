@@ -1,0 +1,25 @@
+{
+  "name": "nodered-raptor-nodes",
+  "version": "0.1.0",
+  "description": "Raptor nodes for node-red ",
+  "dependencies": {
+    "compose.io": "git://github.com/muka/Appcelerator"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muka/nodered-raptor-nodes"
+  },
+  "license": "Apache",
+  "keywords": [
+    "node-red",
+    "raptor",
+    "iot"
+  ],
+  "node-red": {
+    "nodes": {
+      "stream-push": "stream-push.js",
+      "raptor-config": "raptor-config.js"
+    }
+  },
+  "author": "Luca Capra <lcapra@create-net.org>"
+}
