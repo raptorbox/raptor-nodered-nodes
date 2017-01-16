@@ -1,15 +1,16 @@
 {
-  "name": "nodered-raptor-nodes",
+  "name": "raptor-nodered-nodes",
   "version": "0.1.0",
-  "description": "Raptor nodes for node-red ",
+  "description": "Raptor nodes for node-red",
   "dependencies": {
-    "compose.io": "git://github.com/muka/Appcelerator"
+    "debug": "^2.6.0",
+    "raptor": "git://github.com/raptorbox/raptorjs"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/muka/nodered-raptor-nodes"
+    "url": "https://github.com/raptorbox/raptor-nodered-nodes"
   },
-  "license": "Apache",
+  "license": "Apache2",
   "keywords": [
     "node-red",
     "raptor",
@@ -17,9 +18,9 @@
   ],
   "node-red": {
     "nodes": {
-      "stream-push": "stream-push.js",
-      "raptor-config": "raptor-config.js"
+      "stream-push": "nodes/streams/push.js",
+      "raptor-config": "nodes/raptor-config.js"
     }
   },
-  "author": "Luca Capra <lcapra@create-net.org>"
+  "author": "Luca Capra <lcapra@fbk.eu>"
 }

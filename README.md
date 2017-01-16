@@ -1,10 +1,9 @@
-# nodered-raptor-nodes
+# Raptor nodes for node-red
 
-node-red nodes for raptor
 
 ## Install
 
 ```
 cd <node-red>
-npm i muka/nodered-raptor-nodes
+npm i raptor/raptor-nodered-nodes
 ```

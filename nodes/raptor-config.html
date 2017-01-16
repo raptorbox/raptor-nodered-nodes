@@ -3,15 +3,11 @@
         category: 'config',
         defaults: {
             url: {
-                value: "http://api.raptorbox.eu",
+                value: "http://api.raptor.lan",
                 required: true
             },
             apiKey: {
                 value: "",
-                required: true
-            },
-            transport: {
-                value: "http",
                 required: true
             },
             soid: {
@@ -50,15 +46,6 @@
     <div class="form-row">
         <label for="node-config-input-url"><i class="icon-bookmark"></i> Url</label>
         <input type="text" id="node-config-input-url">
-    </div>
-
-    <div class="form-row">
-        <label for="node-config-input-transport"><i class="icon-bookmark"></i> Transport</label>
-        <select id="node-config-input-transport">
-            <option value="http">http</option>
-            <option value="mqtt">mqtt</option>
-            <option value="stomp">stomp</option>
-        </select>
     </div>
 
     <div class="form-row">

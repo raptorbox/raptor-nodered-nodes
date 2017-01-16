@@ -2,7 +2,6 @@
 var lib = module.exports;
 
 var compose = require('compose.io');
-
 var Promise = compose.require('bluebird');
 
 var soCache = {};
@@ -44,7 +43,7 @@ lib.get = function(apiConfig) {
 
     api = new compose(apiConfig);
     setApi(apiConfig, api);
-    
+
     return Promise.resolve(api);
 };
 

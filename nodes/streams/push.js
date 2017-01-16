@@ -2,9 +2,7 @@
 var apis = require('./apis');
 var util = require('./util');
 
-var dbg = function(m) {
-    util.isDebug('sub') && node.log( m );
-};
+var dbg = require("debug")("raptor:nodes:stream:push")
 
 var print = function() {
     util.log.apply(util.log, arguments);
@@ -39,7 +37,7 @@ module.exports = function(RED) {
             var rawdata = msg.payload;
 
             dbg("msg " + JSON.stringify(msg));
-            
+
             if( info.data ) {
                 channelsData = info.data;
             }
@@ -60,7 +58,7 @@ module.exports = function(RED) {
                     channelsData = null;
                 }
             }
-            
+
             if(channelsData && Object.keys(channelsData).length > 0) {
 
                 apis.getServiceObject(node.api, node.soid)
