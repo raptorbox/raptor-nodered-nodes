@@ -3,12 +3,20 @@
         category: 'config',
         defaults: {
             url: {
-                value: "http://api.raptor.lan",
+                value: "http://api.raptor.local",
                 required: true
+            },
+            username: {
+                value: "",
+                required: false
+            },
+            password: {
+                value: "",
+                required: false
             },
             apiKey: {
                 value: "",
-                required: true
+                required: false
             },
             soid: {
                 value: "",
@@ -28,10 +36,16 @@
             }
 
             if(!label) {
-                label = this.apiKey ? this.apiKey.substr(0,4) + ".." + this.apiKey.substr(this.apiKey.length - 4) : 'Raptor API';
+                label = this.apiKey ? this.apiKey.substr(0,4) + ".." + this.apiKey.substr(this.apiKey.length - 4) : null;
             }
 
-            return label;
+            if(!label) {
+              var el = document.createElement('a');
+              el.href = this.url;
+              label = this.username ? this.username + "@" + el.host : null
+            }
+
+            return label || 'Raptor API';
         }
     });
 </script>
@@ -41,6 +55,16 @@
     <div class="form-row">
         <label for="node-config-input-apiKey"><i class="icon-bookmark"></i> Api Key</label>
         <input type="text" id="node-config-input-apiKey">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-username"><i class="icon-bookmark"></i> Username</label>
+        <input type="text" id="node-config-input-username">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-password"><i class="icon-bookmark"></i> Password</label>
+        <input type="text" id="node-config-input-password">
     </div>
 
     <div class="form-row">
