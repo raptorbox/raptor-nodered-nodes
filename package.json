@@ -18,6 +18,7 @@
   ],
   "node-red": {
     "nodes": {
+      "object-create": "nodes/objects/create.js",
       "stream-push": "nodes/streams/push.js",
       "raptor-config": "nodes/raptor-config.js"
     }

@@ -71,7 +71,7 @@
 
     <p>The payload can contain an object with the name of <i>channels</i> as key and their values.</p>
 
-    <p>Expected payload example for an imaginary drone status stream</p>
+    <p>Expected payload example is </p>
     <p>
         <pre>
 {
@@ -81,5 +81,15 @@
 }
         </pre>
     </p>
-    <p>To specify the time of creation of the data payload use <br> <pre>{ lastUpdate: [Date], channels: [above format] }</pre></p>
+    <p>To specify the timestamp, stream name, object ID at runtime, the payload will look like
+    <br>
+      <pre>
+{
+  timestamp: <parseable Date>,
+  channels: [as above] ,
+  stream: "position",
+  objectId: <my-id>
+}
+      </pre>
+    </p>
 </script>
