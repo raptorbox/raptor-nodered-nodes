@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('so-create', {
-        category: 'Device',
+        category: 'Raptor',
         color: '#CCFFFF',
         defaults: {
             api: { value: "", type:"raptor-config" },
@@ -48,7 +48,7 @@
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" >
     </div>
-    
+
     <div class="form-row">
         <label for="node-input-definition"><i class="icon-tag"></i> JSON definition</label>
         <textarea id="node-input-definition"></textarea>
@@ -60,7 +60,7 @@
 
     <p>
         Creates a service object based on the provided definition. <br />
-        Can be provided via form field or `msg.payload`
+        Can be provided via form field or `msg.definition`
     </p>
 
 </script>

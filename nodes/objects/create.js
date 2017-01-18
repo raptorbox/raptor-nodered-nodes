@@ -1,7 +1,8 @@
 var apis = require('../../lib/apis');
 var util = require('../../lib/util');
+var Promise = require('bluebird');
 
-var dbg = require("raptor:nodes:objects:create")
+var dbg = require("debug")("raptor:nodes:objects:create")
 
 module.exports = function (RED) {
 
@@ -18,40 +19,40 @@ module.exports = function (RED) {
 
     this.on('input', function (msg) {
 
-      dbg("msg " + JSON.stringify(msg));
-
-      if(msg.payload) {
-        node.definition = msg.payload;
+      if(msg && msg.definition) {
+        node.definition = msg.definition;
       }
 
-      apis.fromNode(node.api).then(function (api) {
+      var definition;
+      try {
+        definition = JSON.parse(node.definition);
+      } catch(e) {
+        node.error("Cannot parse JSON definition " + e.message);
+        return
+      }
 
-          var json;
-          try {
-            json = JSON.parse(node.definition);
-          } catch(e) {
-            return api.lib.Promise.reject(new Error("Cannot parse JSON definition"));
+      dbg("Creating object with definition " + JSON.stringify(definition));
+
+      apis.get(node.api).then(function (api) {
+
+          if(definition.id) {
+            delete definition.id;
           }
 
-          if(json.id) {
-            delete json.id;
-          }
-
-          return api.create(json).then(function (so) {
-
+          return api.create(definition).then(function (so) {
+            node.log("Created " + so.id)
             node.send({
-              soid: so.id,
-              so: so.toJson(),
-              payload: json
+              objectId: so.id,
+              definition: so.toJSON(),
+              payload: so.toJSON()
             });
 
-            return api.lib.Promise.resolve();
+            return Promise.resolve();
           });
 
         })
         .catch(function (e) {
-          node.error("An error occured loading object");
-          node.error(e.message);
+          node.error("An error occured loading object" + e.message);
         });
 
     });

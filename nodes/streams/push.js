@@ -1,5 +1,6 @@
 var apis = require('../../lib/apis');
 var util = require('../../lib/util');
+var Promise = require('bluebird');
 
 var dbg = require("debug")("raptor:nodes:stream:push")
 
@@ -61,18 +62,18 @@ module.exports = function (RED) {
             var stream = null;
             var streamName = node.stream;
             if(msg.topic) {
-              stream = so.getStream(msg.topic);
+              stream = so.stream(msg.topic);
               if(stream) {
                 streamName = msg.topic;
               }
             }
 
             if(!stream) {
-              stream = so.getStream(streamName);
+              stream = so.stream(streamName);
             }
 
             if(!stream) {
-              return api.lib.Promise.reject(new Error("Stream '" + streamName + "' not found in " + so.name));
+              return Promise.reject(new Error("Stream '" + streamName + "' not found in " + so.name));
             }
 
             dbg("Push data to " + so.id + "." + streamName);
@@ -86,8 +87,8 @@ module.exports = function (RED) {
             return stream.push(channelsData, timestamp);
           })
           .then(function (res) {
-            dbg(JSON.stringify(res));
             dbg("Data sent to " + node.objectId);
+            dbg(JSON.stringify(res));
           })
           .catch(function (err) {
             node.error(err);
