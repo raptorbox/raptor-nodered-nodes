@@ -4,7 +4,7 @@
         color: '#CCFFFF',
         defaults: {
             api: { value: "", type:"raptor-config" },
-            soid: { value: "", required: false},
+            objectId: { value: "", required: false},
             name: { value: "" },
             body: { value: "" }
         },
@@ -19,15 +19,15 @@
                 label = this.name + (this.stream ? "." + this.stream : "")
             }
 
-            var soid = this.soid ? this.soid : null;
+            var objectId = this.objectId ? this.objectId : null;
 
-            if(!soid && this.api) {
+            if(!objectId && this.api) {
                 var _config = RED.nodes.node(this.api);
-                soid = _config.soid ? _config.soid : null;
+                objectId = _config.objectId ? _config.objectId : null;
             }
 
             if(!label) {
-                label = soid ? soid.substr(0, 5) + '..' : null;
+                label = objectId ? objectId.substr(0, 5) + '..' : null;
             }
 
             if(!label) {
@@ -47,8 +47,8 @@
     </div>
 
     <div class="form-row">
-        <label for="node-input-soid"><i class="icon-tag"></i> Device ID</label>
-        <input type="text" id="node-input-soid" placeholder="">
+        <label for="node-input-objectId"><i class="icon-tag"></i> Device ID</label>
+        <input type="text" id="node-input-objectId" placeholder="">
     </div>
 
     <div class="form-row">

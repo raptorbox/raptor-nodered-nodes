@@ -18,7 +18,7 @@
                 value: "",
                 required: false
             },
-            soid: {
+            objectId: {
                 value: "",
                 required: false
             },
@@ -32,7 +32,7 @@
             var label = this.name || null;
 
             if(!label) {
-                label = this.soid ? this.soid.substr(0,4) + ".." + this.soid.substr(this.soid.length - 4) : null;
+                label = this.objectId ? this.objectId.substr(0,4) + ".." + this.objectId.substr(this.objectId.length - 4) : null;
             }
 
             if(!label) {
@@ -73,8 +73,8 @@
     </div>
 
     <div class="form-row">
-        <label for="node-config-input-soid"><i class="icon-tag"></i> Device ID</label>
-        <input type="text" id="node-config-input-soid" placeholder="Service Object ID">
+        <label for="node-config-input-objectId"><i class="icon-tag"></i> Device ID</label>
+        <input type="text" id="node-config-input-objectId" placeholder="Service Object ID">
     </div>
 
     <div class="form-row">

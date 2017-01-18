@@ -7,7 +7,7 @@ module.exports = function (RED) {
         this.username = n.username;
         this.password = n.password;
         this.apiKey = n.apiKey;
-        this.soid = n.soid;
+        this.objectId = n.objectId;
     };
 
     RED.nodes.registerType("raptor-config", RaptorConfig);

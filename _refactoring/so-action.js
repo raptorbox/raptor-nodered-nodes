@@ -24,16 +24,16 @@ module.exports = function(RED) {
 
         node.api = RED.nodes.getNode(config.api);
         
-        node.soid = config.soid;
-        if(!node.soid) {
-            node.soid = node.api.soid;
+        node.objectId = config.objectId;
+        if(!node.objectId) {
+            node.objectId = node.api.objectId;
         }
         
         this.on('input', function (msg) {
 
             dbg("msg " + JSON.stringify(msg));
 
-            apis.getServiceObject(node.api, node.soid)
+            apis.getServiceObject(node.api, node.objectId)
             .then(function(so) {
 
                 var api = this;

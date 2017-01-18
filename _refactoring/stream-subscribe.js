@@ -20,18 +20,18 @@ module.exports = function(RED) {
         var node = this;
 
         node.name = config.name;
-        node.soid = config.soid;
+        node.objectId = config.objectId;
         node.stream = config.stream && config.stream.length ? config.stream : null;
 
         node.api = RED.nodes.getNode(config.api);
 
-        if(!node.soid) {
-            node.soid = node.api.soid;
+        if(!node.objectId) {
+            node.objectId = node.api.objectId;
         }
 
         node.api.transport = !node.api.transport || node.api.transport === "http" ? 'mqtt' : node.api.transport;
 
-        apis.getServiceObject(node.api, node.soid)
+        apis.getServiceObject(node.api, node.objectId)
         .then(function(so) {
 
             var api = this;

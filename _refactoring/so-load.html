@@ -17,15 +17,15 @@
                 label = this.name + (this.stream ? "." + this.stream : "")
             }
 
-            var soid = this.soid ? this.soid : null;
+            var objectId = this.objectId ? this.objectId : null;
 
-            if(!soid && this.api) {
+            if(!objectId && this.api) {
                 var _config = RED.nodes.node(this.api);
-                soid = _config.soid ? _config.soid : null;
+                objectId = _config.objectId ? _config.objectId : null;
             }
 
             if(!label) {
-                label = soid ? soid.substr(0, 5) + '..' : null;
+                label = objectId ? objectId.substr(0, 5) + '..' : null;
             }
 
             if(!label) {

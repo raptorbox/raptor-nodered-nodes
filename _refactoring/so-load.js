@@ -32,21 +32,21 @@ module.exports = function (RED) {
                 
                 var isSingleId = (typeof msg.payload === 'string');
 
-                var soids = msg.payload;
+                var objectIds = msg.payload;
                 if(isSingleId) {
-                    soids = [msg.payload];
+                    objectIds = [msg.payload];
                 }
 
-                api.lib.Promise.all(soids)
-                    .map(function(soid) {
-                        return api.load(soid)
+                api.lib.Promise.all(objectIds)
+                    .map(function(objectId) {
+                        return api.load(objectId)
                                 .then(function(so) {
                             
                                     var json = so.toJson();
                             
                                     if(node.singleitem) {
                                         node.send({
-                                            soid: so.id,
+                                            objectId: so.id,
                                             payload: json
                                         });                    
                                     }

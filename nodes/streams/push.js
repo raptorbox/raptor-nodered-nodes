@@ -12,12 +12,12 @@ module.exports = function (RED) {
     var node = this;
 
     node.name = config.name;
-    node.soid = config.soid;
+    node.objectId = config.objectId;
     node.stream = config.stream && config.stream.length ? config.stream : null;
     node.api = RED.nodes.getNode(config.api);
 
-    if(!node.soid) {
-      node.soid = node.api.soid;
+    if(!node.objectId) {
+      node.objectId = node.api.objectId;
     }
 
     this.on('input', function (msg) {
@@ -53,7 +53,7 @@ module.exports = function (RED) {
 
       if(channelsData && Object.keys(channelsData).length > 0) {
 
-        apis.getServiceObject(node.api, node.soid)
+        apis.getServiceObject(node.api, node.objectId)
           .then(function (so) {
 
             var api = this;
@@ -87,7 +87,7 @@ module.exports = function (RED) {
           })
           .then(function (res) {
             dbg(JSON.stringify(res));
-            dbg("Data sent to " + node.soid);
+            dbg("Data sent to " + node.objectId);
           })
           .catch(function (err) {
             node.error(err);
