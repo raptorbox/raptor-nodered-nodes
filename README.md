@@ -8,7 +8,7 @@ This repository add integrated nodes to the Raptor IoT platform
 
 ```
 cd <node-red>
-npm i raptor/raptor-nodered-nodes
+npm i raptorbox/raptor-nodered-nodes
 ```
 
 ## License
