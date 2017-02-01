@@ -7,6 +7,9 @@ var dbg = require("debug")("raptor:nodes:stream:subscribe")
 
 module.exports = function (RED) {
 
+  // track subscriptions and unsubscribe on exit
+  var unsubscriptions = [];
+
   function StreamSubscribe(config) {
 
     RED.nodes.createNode(this, config);
@@ -47,24 +50,34 @@ module.exports = function (RED) {
 
         dbg("Subscribing to " + streamName);
 
-        return stream.subscribe(function (data) {
-
-          dbg("Stream " + streamName + " updated!");
-          dbg(data)
-
+        var fn = function (data) {
           node.send({
             payload: data
           });
+        };
 
-        });
+        unsubscriptions.push(function() {
+          return stream.unsubscribe(fn);
+        })
+
+        return stream.subscribe(fn);
       })
       .catch(function (err) {
         node.error(err);
       });
 
     this.on('close', function () {
+
       // tidy up any state
       dbg("Closing node");
+
+      Promise.join(unsubscriptions.map(function(fn) {
+        return fn();
+      }))
+      .then(function() {
+        dbg("All unsubscribed");
+      });
+
     });
 
   };

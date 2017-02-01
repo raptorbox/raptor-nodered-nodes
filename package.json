@@ -19,6 +19,7 @@
   "node-red": {
     "nodes": {
       "so-create": "nodes/objects/create.js",
+      "so-invoke": "nodes/actions/invoke.js",
       "stream-push": "nodes/streams/push.js",
       "stream-subscribe": "nodes/streams/subscribe.js",
       "raptor-config": "nodes/raptor-config.js"
