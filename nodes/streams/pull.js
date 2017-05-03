@@ -1,6 +1,6 @@
 
-var apis = require('./apis');
-var util = require('./util');
+var apis = require('../../lib/apis');
+var util = require('../../lib/util');
 var Promise = require('bluebird');
 
 var dbg = require("debug")("raptor:nodes:stream:pull")
