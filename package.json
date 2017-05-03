@@ -21,6 +21,7 @@
       "so-create": "nodes/objects/create.js",
       "so-invoke": "nodes/actions/invoke.js",
       "stream-push": "nodes/streams/push.js",
+      "stream-pull": "nodes/streams/pull.js",
       "stream-subscribe": "nodes/streams/subscribe.js",
       "raptor-config": "nodes/raptor-config.js"
     }

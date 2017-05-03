@@ -39,6 +39,21 @@
             return 'pull:' + label;
         }
     });
+
+    function pullOnChange(domSelect) {
+
+        var select = $('#node-input-type');
+        var filtercontainer = $('#node-input-filter').parent('.form-row');
+
+        var option = select.find('option:selected');
+
+        if (filtercontainer.size() && option.size() && option.attr('value') === '__filter')
+          filtercontainer.show()
+        else
+          filtercontainer.hide();
+
+    }
+
 </script>
 
 <script type="text/x-red" data-template-name="stream-pull">
@@ -65,19 +80,7 @@
 
     <div class="form-row">
         <label for="node-input-fetchType"><i class="icon-tag"></i> Type</label>
-        <select id="node-input-fetchType" onChange="return (function(domSelect) {
-
-            var select = $('#node-input-type');
-            var filtercontainer = $('#node-input-filter').parent('.form-row');
-
-            var option = select.find('option:selected');
-
-//            console.log(select, filtercontainer, option.attr('value'));
-
-            (filtercontainer.size() && option.size() && option.attr('value') === '__filter')
-                    ? filtercontainer.show() : filtercontainer.hide();
-
-        })(this);">
+        <select id="node-input-fetchType" onChange="return pullOnChange(this);">
 
             <option value="lastUpdate">Last value</option>
             <option value="">All values</option>

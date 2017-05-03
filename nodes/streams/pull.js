@@ -1,17 +1,9 @@
 
 var apis = require('./apis');
 var util = require('./util');
+var Promise = require('bluebird');
 
-var dbg = function(m) {
-    util.isDebug('sub') && node.log( m );
-};
-
-var print = function() {
-    util.log.apply(util.log, arguments);
-};
-
-
-var Promise = apis.Promise;
+var dbg = require("debug")("raptor:nodes:stream:pull")
 
 module.exports = function (RED) {
 
@@ -38,7 +30,7 @@ module.exports = function (RED) {
         this.on('input', function (msg) {
 
             dbg("msg " + JSON.stringify(msg));
-            
+
             var info = util.parsePayload(msg, node);
 
             dbg("objectId " + node.objectId);
@@ -110,13 +102,13 @@ module.exports = function (RED) {
                                     (typeof searchFilter === 'string' ?
                                         searchFilter : JSON.stringify(searchFilter))
                                 : ""));
-                                
+
                         node.send({
                             topic: streamName,
                             lastUpdate: null,
                             payload: null
                         });
-                                
+
                     }
                     else {
 
@@ -139,12 +131,8 @@ module.exports = function (RED) {
                     return Promise.resolve();
                 });
             })
-//                    .then(function (res) {
-//                        dbg("Data sent to " + node.objectId);
-//                    })
             .catch(function (err) {
                 node.error(err);
-                print(err);
             });
 
         });
