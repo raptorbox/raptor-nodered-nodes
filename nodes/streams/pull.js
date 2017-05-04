@@ -43,20 +43,19 @@ module.exports = function (RED) {
                 var stream = null;
                 var streamName = node.stream;
                 if (msg.topic) {
-                    stream = so.getStream(msg.topic);
+                    stream = so.stream(msg.topic);
                     if (stream) {
                         streamName = msg.topic;
                     }
                 }
 
                 if (!stream) {
-                    stream = so.getStream(streamName);
+                    stream = so.stream(streamName);
                 }
 
                 if (!stream) {
-                    return api.lib.Promise.reject(new Error("Stream '" + streamName + "' not found in " + so.name));
+                    return Promise.reject(new Error("Stream '" + streamName + "' not found in " + so.name));
                 }
-
 
                 var searchFilter = node.filter;
                 if (msg.filter) {
@@ -113,15 +112,15 @@ module.exports = function (RED) {
                     else {
 
                         // iterate results
-                        while (dataset.next()) {
+                        for(var i = 0; i < dataset.size(); i++)  {
 
                             // current return the data stored at the position of the internal cursor
-                            var dataobj = dataset.current();
-                            var value = dataobj.asObject();
+                            var dataobj = dataset.get(i);
+                            var value = dataobj.toJSON();
 
                             node.send({
                                 topic: streamName,
-                                lastUpdate: dataobj.lastUpdate,
+                                timestamp: dataobj.getTimestamp(),
                                 payload: value
                             });
 

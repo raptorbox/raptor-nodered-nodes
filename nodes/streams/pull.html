@@ -41,7 +41,7 @@
     });
 
     function pullOnChange(domSelect) {
-
+      console.warn("onChange ", domSelect)
         var select = $('#node-input-type');
         var filtercontainer = $('#node-input-filter').parent('.form-row');
 
@@ -83,7 +83,7 @@
         <select id="node-input-fetchType" onChange="return pullOnChange(this);">
 
             <option value="lastUpdate">Last value</option>
-            <option value="">All values</option>
+            <option value="all">All values</option>
             <option value="__filter">Filter</option>
         </select>
     </div>
