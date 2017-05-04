@@ -15,8 +15,12 @@ module.exports = function (RED) {
 
         node.name = config.name;
         node.objectId = config.objectId;
-
         node.stream = config.stream && config.stream.length ? config.stream : null;
+
+        node.size = config.size > 0 ? config.size : 100;
+        node.offset = config.offset > 0 ? config.offset : 0;
+
+        node.emitOnce = config.emitOnce
 
         node.fetchType = config.fetchType;
         node.filter = config.filter || '{}';
@@ -62,6 +66,8 @@ module.exports = function (RED) {
                     searchFilter = msg.filter;
                 }
 
+
+
                 (function() {
 
                     if(node.fetchType === '__filter') {
@@ -79,13 +85,18 @@ module.exports = function (RED) {
                         }
 
                         dbg("Searching data in " + so.id + "." + streamName + " with filter " + JSON.stringify(searchFilter));
-                        return stream.search(searchFilter);
+                        return stream.search(searchFilter, node.size, node.offset);
                     }
                     else {
 
-                        var type = node.fetchType ? node.fetchType : null;
-                        dbg("Fetching "+ ( type ? type : "all" ) +" data from " + so.id + "." + streamName);
-                        return stream.pull(type);
+                        var type = node.fetchType ? node.fetchType : "all";
+                        var lastUpdate = type !== "all"
+                        dbg("Fetching "+ type +" data from " + so.id + "." + streamName);
+
+                        if(lastUpdate)
+                          return stream.lastUpdate();
+                        else
+                          return stream.pull(node.size, node.offset);
                     }
 
                 })()
@@ -111,19 +122,30 @@ module.exports = function (RED) {
                     }
                     else {
 
-                        // iterate results
-                        for(var i = 0; i < dataset.size(); i++)  {
 
-                            // current return the data stored at the position of the internal cursor
-                            var dataobj = dataset.get(i);
-                            var value = dataobj.toJSON();
+                        if(node.emitOnce) {
 
-                            node.send({
-                                topic: streamName,
-                                timestamp: dataobj.getTimestamp(),
-                                payload: value
-                            });
+                          node.send({
+                              topic: streamName,
+                              payload: dataset.toJSON()
+                          });
 
+                        }
+                        else {
+                          // iterate results
+                          for(var i = 0; i < dataset.size(); i++)  {
+
+                              // current return the data stored at the position of the internal cursor
+                              var dataobj = dataset.get(i);
+                              var value = dataobj.toJSON();
+
+                              node.send({
+                                  topic: streamName,
+                                  timestamp: dataobj.getTimestamp(),
+                                  payload: value
+                              });
+
+                          }
                         }
                     }
 

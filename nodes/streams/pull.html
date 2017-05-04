@@ -7,8 +7,11 @@
             objectId: { value: "", required: false},
             name: { value: "" },
             stream: { value: "", required: true },
+            offset: { value: "", required: false },
+            size: { value: "", required: false },
+            emitOnce: { value: false, required: false },
             fetchType: { value: "", required: true },
-            filter: { value: "{}", required: false }
+            filter: { value: "{}", required: false },
         },
         inputs: 1,
         outputs: 1,
@@ -41,13 +44,13 @@
     });
 
     function pullOnChange(domSelect) {
-      console.warn("onChange ", domSelect)
-        var select = $('#node-input-type');
+
+        var select = $(domSelect);
         var filtercontainer = $('#node-input-filter').parent('.form-row');
 
         var option = select.find('option:selected');
 
-        if (filtercontainer.size() && option.size() && option.attr('value') === '__filter')
+        if (filtercontainer.size() && option.size() && option.val() === '__filter')
           filtercontainer.show()
         else
           filtercontainer.hide();
@@ -76,6 +79,21 @@
     <div class="form-row">
         <label for="node-input-stream"><i class="icon-tag"></i> Stream</label>
         <input type="text" id="node-input-stream" placeholder="Stream">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-offset"><i class="icon-tag"></i> Offset</label>
+        <input type="number" id="node-input-offset" placeholder="0">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-size"><i class="icon-tag"></i> Size</label>
+        <input type="number" id="node-input-size" placeholder="100">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-emitOnce"><i class="icon-tag"></i> Once</label>
+        <input type="checkbox" id="node-input-emitOnce">
     </div>
 
     <div class="form-row">

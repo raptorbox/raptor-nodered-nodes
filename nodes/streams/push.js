@@ -17,6 +17,11 @@ module.exports = function (RED) {
     node.stream = config.stream && config.stream.length ? config.stream : null;
     node.api = RED.nodes.getNode(config.api);
 
+    if(!node.api) {
+      node.error("stream.push node is not configured")
+      return
+    }
+
     if(!node.objectId) {
       node.objectId = node.api.objectId;
     }

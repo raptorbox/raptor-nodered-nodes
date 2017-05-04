@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Raptor nodes for node-red",
   "dependencies": {
-    "debug": "^2.6.6",
+    "debug": "*",
     "raptor": "git://github.com/raptorbox/raptorjs"
   },
   "repository": {
