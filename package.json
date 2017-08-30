@@ -4,7 +4,7 @@
   "description": "Raptor nodes for node-red",
   "dependencies": {
     "debug": "*",
-    "raptor": "git://github.com/raptorbox/raptorjs"
+    "raptor-sdk": "*"
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,8 @@
       "raptor-config": "nodes/raptor-config.js"
     }
   },
-  "author": "Luca Capra <lcapra@fbk.eu>"
+  "author": "Luca Capra <lcapra@fbk.eu>",
+  "devDependencies": {
+    "eslint": "^4.5.0"
+  }
 }

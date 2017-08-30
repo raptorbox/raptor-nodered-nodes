@@ -14,7 +14,7 @@
                 value: "",
                 required: false
             },
-            apiKey: {
+            token: {
                 value: "",
                 required: false
             },
@@ -36,7 +36,7 @@
             }
 
             if(!label) {
-                label = this.apiKey ? this.apiKey.substr(0,4) + ".." + this.apiKey.substr(this.apiKey.length - 4) : null;
+                label = this.token ? this.token.substr(0,4) + ".." + this.token.substr(this.token.length - 4) : null;
             }
 
             if(!label) {
@@ -53,8 +53,8 @@
 <script type="text/x-red" data-template-name="raptor-config">
 
     <div class="form-row">
-        <label for="node-config-input-apiKey"><i class="icon-bookmark"></i> Api Key</label>
-        <input type="text" id="node-config-input-apiKey">
+        <label for="node-config-input-token"><i class="icon-bookmark"></i> Api Key</label>
+        <input type="text" id="node-config-input-token">
     </div>
 
     <div class="form-row">

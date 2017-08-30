@@ -6,7 +6,7 @@ module.exports = function (RED) {
         this.url = n.url;
         this.username = n.username;
         this.password = n.password;
-        this.apiKey = n.apiKey;
+        this.token = n.token;
         this.objectId = n.objectId;
     };
 
