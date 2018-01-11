@@ -42,7 +42,7 @@ module.exports = function (RED) {
                 return api.Inventory().create(definition).then(function (dev) {
                     node.log("Created " + dev.id)
                     node.send({
-                        objectId: dev.id,
+                        deviceId: dev.id,
                         definition: dev.toJSON(),
                         payload: dev.toJSON()
                     })

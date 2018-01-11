@@ -18,7 +18,7 @@
                 value: "",
                 required: false
             },
-            objectId: {
+            deviceId: {
                 value: "",
                 required: false
             },
@@ -32,7 +32,7 @@
             var label = this.name || null;
 
             if(!label) {
-                label = this.objectId ? this.objectId.substr(0,4) + ".." + this.objectId.substr(this.objectId.length - 4) : null;
+                label = this.deviceId ? this.deviceId.substr(0,4) + ".." + this.deviceId.substr(this.deviceId.length - 4) : null;
             }
 
             if(!label) {
@@ -73,8 +73,8 @@
     </div>
 
     <div class="form-row">
-        <label for="node-config-input-objectId"><i class="icon-tag"></i> Device ID</label>
-        <input type="text" id="node-config-input-objectId" placeholder="Service Object ID">
+        <label for="node-config-input-deviceId"><i class="icon-tag"></i> Device ID</label>
+        <input type="text" id="node-config-input-deviceId" placeholder="Service Object ID">
     </div>
 
     <div class="form-row">

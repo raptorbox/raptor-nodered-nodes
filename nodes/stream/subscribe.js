@@ -11,23 +11,23 @@ module.exports = function (RED) {
     var unsubscriptions = []
 
     function StreamSubscribe(config) {
-
+        config = config || {}
         RED.nodes.createNode(this, config)
 
         var node = this
 
         node.name = config.name
-        node.objectId = config.objectId
+        node.deviceId = config.deviceId
         node.stream = config.stream ? config.stream : null
 
-        node.api = RED.nodes.getNode(config.api)
+        node.api = RED.nodes.getNode(config.api) || {}
 
-        if(!node.objectId) {
-            node.objectId = node.api.objectId
+        if(!node.deviceId) {
+            node.deviceId = node.api.deviceId
         }
 
-        if(!node.objectId) {
-            node.error("objectId must be specified")
+        if(!node.deviceId) {
+            node.error("deviceId must be specified")
             return
         }
 
@@ -37,7 +37,7 @@ module.exports = function (RED) {
         }
 
 
-        apis.getServiceObject(node.api, node.objectId)
+        apis.getServiceObject(node.api, node.deviceId)
             .then(function (so) {
                 return apis.get(node.api)
                     .then((api) =>  {

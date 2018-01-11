@@ -7,7 +7,7 @@ var dbg = require("debug")("raptor:nodes:action")
 module.exports = function (RED) {
 
     function ActionInvoke(config) {
-
+        config = config || {}
         RED.nodes.createNode(this, config)
 
         var node = this
@@ -15,16 +15,16 @@ module.exports = function (RED) {
         node.name = config.name
         node.api = RED.nodes.getNode(config.api)
 
-        node.objectId = config.objectId
-        if(!node.objectId) {
-            node.objectId = node.api.objectId
+        node.deviceId = config.deviceId
+        if(!node.deviceId) {
+            node.deviceId = node.api.deviceId
         }
 
         this.on("input", function (msg) {
 
             dbg("msg " + JSON.stringify(msg))
 
-            apis.getDevice(node.api, node.objectId)
+            apis.getDevice(node.api, node.deviceId)
                 .then(function (dev) {
 
                     var api = this

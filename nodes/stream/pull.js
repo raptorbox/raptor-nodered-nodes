@@ -8,13 +8,13 @@ var dbg = require("debug")("raptor:nodes:stream:pull")
 module.exports = function (RED) {
 
     function StreamPull(config) {
-
+        config = config || {}
         RED.nodes.createNode(this, config)
 
         var node = this
 
         node.name = config.name
-        node.objectId = config.objectId
+        node.deviceId = config.deviceId
         node.stream = config.stream && config.stream.length ? config.stream : null
 
         node.size = config.size > 0 ? config.size : 100
@@ -25,10 +25,10 @@ module.exports = function (RED) {
         node.fetchType = config.fetchType
         node.filter = config.filter || "{}"
 
-        node.api = RED.nodes.getNode(config.api)
+        node.api = RED.nodes.getNode(config.api) || {}
 
-        if(!node.objectId) {
-            node.objectId = node.api.objectId
+        if(!node.deviceId) {
+            node.deviceId = node.api.deviceId
         }
 
         this.on("input", function (msg) {
@@ -37,8 +37,8 @@ module.exports = function (RED) {
 
             var info = util.parsePayload(msg, node)
 
-            dbg("objectId " + node.objectId)
-            apis.getDevice(node.api, node.objectId).then(function (dev) {
+            dbg("deviceId " + node.deviceId)
+            apis.getDevice(node.api, node.deviceId).then(function (dev) {
                 return apis.get(node.api)
                     .then((api) => {
 

@@ -13,7 +13,7 @@ module.exports = function (RED) {
         var node = this
 
         node.name = config.name
-        node.objectId = config.objectId
+        node.deviceId = config.deviceId
         node.stream = config.stream && config.stream.length ? config.stream : null
         node.api = RED.nodes.getNode(config.api)
 
@@ -22,8 +22,8 @@ module.exports = function (RED) {
             return
         }
 
-        if(!node.objectId) {
-            node.objectId = node.api.objectId
+        if(!node.deviceId) {
+            node.deviceId = node.api.deviceId
         }
 
         this.on("input", function (msg) {
@@ -59,7 +59,7 @@ module.exports = function (RED) {
 
             if(channelsData && Object.keys(channelsData).length > 0) {
 
-                apis.getServiceObject(node.api, node.objectId)
+                apis.getServiceObject(node.api, node.deviceId)
                     .then(function (so) {
 
                         var api = this
@@ -92,7 +92,7 @@ module.exports = function (RED) {
                         return stream.push(channelsData, timestamp)
                     })
                     .then(function (res) {
-                        dbg("Data sent to " + node.objectId)
+                        dbg("Data sent to " + node.deviceId)
                         dbg(JSON.stringify(res))
                     })
                     .catch(function (err) {

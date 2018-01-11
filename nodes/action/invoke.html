@@ -4,7 +4,7 @@
         color: '#CCFFFF',
         defaults: {
             api: { value: "", type:"raptor-config" },
-            objectId: { value: "", required: false},
+            deviceId: { value: "", required: false},
             name: { value: "" },
             body: { value: "" }
         },
@@ -19,15 +19,15 @@
                 label = this.name + (this.stream ? "." + this.stream : "")
             }
 
-            var objectId = this.objectId ? this.objectId : null;
+            var deviceId = this.deviceId ? this.deviceId : null;
 
-            if(!objectId && this.api) {
+            if(!deviceId && this.api) {
                 var _config = RED.nodes.node(this.api);
-                objectId = _config.objectId ? _config.objectId : null;
+                deviceId = _config.deviceId ? _config.deviceId : null;
             }
 
             if(!label) {
-                label = objectId ? objectId.substr(0, 5) + '..' : null;
+                label = deviceId ? deviceId.substr(0, 5) + '..' : null;
             }
 
             if(!label) {
@@ -47,8 +47,8 @@
     </div>
 
     <div class="form-row">
-        <label for="node-input-objectId"><i class="icon-tag"></i> Device ID</label>
-        <input type="text" id="node-input-objectId" placeholder="">
+        <label for="node-input-deviceId"><i class="icon-tag"></i> Device ID</label>
+        <input type="text" id="node-input-deviceId" placeholder="">
     </div>
 
     <div class="form-row">

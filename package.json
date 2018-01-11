@@ -22,6 +22,7 @@
   "node-red": {
     "nodes": {
       "create-device": "nodes/inventory/create.js",
+      "read-device": "nodes/inventory/read.js",
       "invoke-action": "nodes/action/invoke.js",
       "send-data": "nodes/stream/push.js",
       "read-data": "nodes/stream/pull.js",
