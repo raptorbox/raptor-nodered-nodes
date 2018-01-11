@@ -1,10 +1,13 @@
 {
-  "name": "raptor-nodered-nodes",
-  "version": "0.1.0",
+  "name": "node-red-contrib-raptor",
+  "version": "5.0.0",
   "description": "Raptor nodes for node-red",
   "dependencies": {
-    "debug": "*",
-    "raptor-sdk": "*"
+    "debug": "^3.1.0",
+    "raptor-sdk": "^5.0.20"
+  },
+  "scripts": {
+    "release": "./node_modules/.bin/standard-version --release-as minor"
   },
   "repository": {
     "type": "git",
@@ -28,6 +31,7 @@
   },
   "author": "Luca Capra <lcapra@fbk.eu>",
   "devDependencies": {
-    "eslint": "^4.5.0"
+    "eslint": "^4.5.0",
+    "standard-version": "^4.3.0"
   }
 }
