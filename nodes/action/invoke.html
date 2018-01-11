@@ -1,6 +1,6 @@
 <script type="text/javascript">
-    RED.nodes.registerType('so-invoke', {
-        category: 'Device',
+    RED.nodes.registerType('action-invoke', {
+        category: 'Raptor',
         color: '#CCFFFF',
         defaults: {
             api: { value: "", type:"raptor-config" },
@@ -25,7 +25,7 @@
                 var _config = RED.nodes.node(this.api);
                 objectId = _config.objectId ? _config.objectId : null;
             }
-so-invoke
+
             if(!label) {
                 label = objectId ? objectId.substr(0, 5) + '..' : null;
             }
@@ -39,7 +39,7 @@ so-invoke
     });
 </script>
 
-<script type="text/x-red" data-template-name="so-invoke">
+<script type="text/x-red" data-template-name="action-invoke">
 
     <div class="form-row">
         <label for="node-input-api"><i class="icon-tag"></i> API</label>
@@ -63,7 +63,7 @@ so-invoke
 
 </script>
 
-<script type="text/x-red" data-help-name="so-invoke">
+<script type="text/x-red" data-help-name="action-invoke">
 
     <p>Execute an actuation on a Service Object</p>
 
