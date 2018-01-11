@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('inventory-create', {
-        category: 'Raptor',
+        category: 'raptor',
         color: '#CCFFFF',
         defaults: {
             api: { value: "", type:"raptor-config" },
@@ -32,7 +32,7 @@
                 label = "Device";
             }
 
-            return 'create:'+label;
+            return 'Create '+label;
         }
     });
 </script>

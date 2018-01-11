@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('stream-subscribe', {
-        category: 'Raptor',
+        category: 'raptor',
         color: '#CCFFFF',
         defaults: {
             api: { value: "", type:"raptor-config" },
@@ -34,7 +34,7 @@
                 label = objectId ? objectId.substr(0, 5) + '..' : null;
             }
 
-            return 'sub:'+label;
+            return 'Subscribe '+label;
         }
     });
 </script>

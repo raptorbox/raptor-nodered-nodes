@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('action-invoke', {
-        category: 'Raptor',
+        category: 'raptor',
         color: '#CCFFFF',
         defaults: {
             api: { value: "", type:"raptor-config" },
@@ -34,7 +34,7 @@
                 label = "Device";
             }
 
-            return 'act:'+label;
+            return 'Execute '+label;
         }
     });
 </script>

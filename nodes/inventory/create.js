@@ -39,28 +39,27 @@ module.exports = function (RED) {
                     delete definition.id
                 }
 
-                return api.create(definition).then(function (so) {
-                    node.log("Created " + so.id)
+                return api.Inventory().create(definition).then(function (dev) {
+                    node.log("Created " + dev.id)
                     node.send({
-                        objectId: so.id,
-                        definition: so.toJSON(),
-                        payload: so.toJSON()
+                        objectId: dev.id,
+                        definition: dev.toJSON(),
+                        payload: dev.toJSON()
                     })
 
                     return Promise.resolve()
                 })
 
+            }).catch(function (e) {
+                node.error("An error occured loading object" + e.message)
             })
-                .catch(function (e) {
-                    node.error("An error occured loading object" + e.message)
-                })
 
         })
 
-        this.on("close", function () {
-            // tidy up any state
-            dbg("Closing node")
-        })
+        // this.on("close", function () {
+        //     // tidy up any state
+        //     dbg("Closing node")
+        // })
     }
 
     RED.nodes.registerType("inventory-create", InventoryCreate)
