@@ -55,5 +55,5 @@ module.exports = function (RED) {
 
     }
 
-    RED.nodes.registerType("action-invoke", ActionInvoke)
+    RED.nodes.registerType("invoke-action", ActionInvoke)
 }

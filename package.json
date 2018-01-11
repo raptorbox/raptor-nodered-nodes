@@ -21,11 +21,11 @@
   ],
   "node-red": {
     "nodes": {
-      "inventory-create": "nodes/inventory/create.js",
-      "action-invoke": "nodes/action/invoke.js",
-      "stream-push": "nodes/stream/push.js",
-      "stream-pull": "nodes/stream/pull.js",
-      "stream-subscribe": "nodes/stream/subscribe.js",
+      "create-device": "nodes/inventory/create.js",
+      "invoke-action": "nodes/action/invoke.js",
+      "send-data": "nodes/stream/push.js",
+      "read-data": "nodes/stream/pull.js",
+      "subscribe-data": "nodes/stream/subscribe.js",
       "raptor-config": "nodes/raptor-config.js"
     }
   },

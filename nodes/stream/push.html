@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('stream-push', {
+    RED.nodes.registerType('send-data', {
         category: 'raptor',
         color: '#CCFFFF',
         defaults: {
@@ -34,12 +34,12 @@
                 label = objectId ? objectId.substr(0, 5) + '..' : null;
             }
 
-            return 'Send data' + label;
+            return 'Send data ' + label;
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="stream-push">
+<script type="text/x-red" data-template-name="send-data">
 
     <div class="form-row">
         <label for="node-input-api"><i class="icon-tag"></i> API</label>
@@ -63,7 +63,7 @@
 
 </script>
 
-<script type="text/x-red" data-help-name="stream-push">
+<script type="text/x-red" data-help-name="send-data">
 
     <p>Push data to a Service Object</p>
 

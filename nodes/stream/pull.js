@@ -156,5 +156,5 @@ module.exports = function (RED) {
     }
 
 
-    RED.nodes.registerType("stream-pull", StreamPull)
+    RED.nodes.registerType("read-data", StreamPull)
 }

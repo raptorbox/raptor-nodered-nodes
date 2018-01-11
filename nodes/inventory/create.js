@@ -62,5 +62,5 @@ module.exports = function (RED) {
         // })
     }
 
-    RED.nodes.registerType("inventory-create", InventoryCreate)
+    RED.nodes.registerType("create-device", InventoryCreate)
 }

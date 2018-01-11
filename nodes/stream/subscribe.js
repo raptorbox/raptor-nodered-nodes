@@ -84,5 +84,5 @@ module.exports = function (RED) {
 
     }
 
-    RED.nodes.registerType("stream-subscribe", StreamSubscribe)
+    RED.nodes.registerType("subscribe-data", StreamSubscribe)
 }
