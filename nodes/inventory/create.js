@@ -51,15 +51,11 @@ module.exports = function (RED) {
                 })
 
             }).catch(function (e) {
-                node.error("An error occured loading object" + e.message)
+                node.error("An error occured loading object: " + e.message)
             })
 
         })
 
-        // this.on("close", function () {
-        //     // tidy up any state
-        //     dbg("Closing node")
-        // })
     }
 
     RED.nodes.registerType("create-device", InventoryCreate)
