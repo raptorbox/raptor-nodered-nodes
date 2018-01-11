@@ -5,7 +5,7 @@
         defaults: {
             api: { value: "", type:"raptor-config" },
             name: { value: "Device", required: false },
-            definition: { value: "", required: true }
+            deviceId: { value: "", required: false }
         },
         inputs: 1,
         outputs: 1,
@@ -19,13 +19,9 @@
             }
 
             if(!label) {
-                try {
-                    var obj = JSON.parse(this.definition);
-                    if(obj.name) {
-                        label = obj.name;
-                    }
+                if(this.deviceId) {
+                    label = this.deviceId;
                 }
-                catch(e) {}
             }
 
             if(!label) {
