@@ -16,15 +16,12 @@ module.exports = function (RED) {
 
         var node = this
 
+        node.api = node.api || {}
         node.name = config.name
-        node.deviceId = config.deviceId
+        node.deviceId = config.deviceId || node.api.deviceId
         node.stream = config.stream ? config.stream : null
 
         node.api = RED.nodes.getNode(config.api) || {}
-
-        if(!node.deviceId) {
-            node.deviceId = node.api.deviceId
-        }
 
         if(!node.deviceId) {
             node.error("deviceId must be specified")
@@ -36,34 +33,31 @@ module.exports = function (RED) {
             return
         }
 
+        apis.getDevice(node.api, node.deviceId).then(function (so) {
+            return apis.get(node.api).then((api) =>  {
 
-        apis.getServiceObject(node.api, node.deviceId)
-            .then(function (so) {
-                return apis.get(node.api)
-                    .then((api) =>  {
+                var streamName = node.stream
+                var stream = so.getStream(streamName)
 
-                        var streamName = node.stream
-                        var stream = so.getStream(streamName)
+                if(!stream) {
+                    return Promise.reject(new Error("Stream '" + streamName + "' not found in " + so.name))
+                }
 
-                        if(!stream) {
-                            return Promise.reject(new Error("Stream '" + streamName + "' not found in " + so.name))
-                        }
+                dbg("Subscribing to " + streamName)
 
-                        dbg("Subscribing to " + streamName)
-
-                        var fn = function (data) {
-                            node.send({
-                                payload: data
-                            })
-                        }
-
-                        unsubscriptions.push(function() {
-                            return stream.unsubscribe(fn)
-                        })
-
-                        return stream.subscribe(fn)
+                var fn = function (data) {
+                    node.send({
+                        payload: data
                     })
+                }
+
+                unsubscriptions.push(function() {
+                    return stream.unsubscribe(fn)
+                })
+
+                return api.Stream().subscribe(stream, fn)
             })
+        })
             .catch(function (err) {
                 node.error(err)
             })

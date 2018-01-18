@@ -1,8 +1,21 @@
 var apis = require("../../lib/apis")
-var util = require("../../lib/util")
 var Promise = require("bluebird")
-
 var dbg = require("debug")("raptor:nodes:inventory:create")
+
+// {"name":"","description":"","properties":{},"streams":{"test":{"str":"string","bool":"boolean","num":"number"}},"actions":["test"]}
+// var model = {
+//     name: "",
+//     description: "",
+//     properties: {},
+//     streams: {
+//         test: {
+//             str: "string",
+//             bool: "boolean",
+//             num: "number"
+//         }
+//     },
+//     actions: ["test"]
+// }
 
 module.exports = function (RED) {
 

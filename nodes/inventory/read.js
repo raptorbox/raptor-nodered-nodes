@@ -1,8 +1,5 @@
 var apis = require("../../lib/apis")
-var util = require("../../lib/util")
 var Promise = require("bluebird")
-
-var dbg = require("debug")("raptor:nodes:inventory:read")
 
 module.exports = function (RED) {
     function InventoryRead(config) {

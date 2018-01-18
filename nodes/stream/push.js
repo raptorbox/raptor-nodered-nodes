@@ -13,17 +13,13 @@ module.exports = function (RED) {
         var node = this
 
         node.name = config.name
-        node.deviceId = config.deviceId
+        node.deviceId = config.deviceId || node.api.deviceId
         node.stream = config.stream && config.stream.length ? config.stream : null
         node.api = RED.nodes.getNode(config.api)
 
         if(!node.api) {
-            node.error("stream.push node is not configured")
+            node.error("Missing node configurations")
             return
-        }
-
-        if(!node.deviceId) {
-            node.deviceId = node.api.deviceId
         }
 
         this.on("input", function (msg) {
@@ -32,8 +28,21 @@ module.exports = function (RED) {
 
             var channelsData
 
+            node.deviceId = msg.deviceId || node.deviceId
+
+            var pcs = msg.topic.split(".")
+            if (pcs.length > 1) {
+                node.deviceId = pcs[0]
+                node.stream = pcs[1]
+            }
+
+            if (!node.deviceId) {
+                node.error(new Error("Device ID not found"))
+                return
+            }
+
             // will be used as value for lastUpdate if not specified
-            var timestamp = new Date
+            var timestamp = new Date()
             var rawdata = msg.payload
 
             dbg("msg " + JSON.stringify(msg))
@@ -58,46 +67,43 @@ module.exports = function (RED) {
             }
 
             if(channelsData && Object.keys(channelsData).length > 0) {
-
-                apis.getServiceObject(node.api, node.deviceId)
-                    .then(function (so) {
-
-                        var api = this
-
-                        var stream = null
+                apis.get(node.api).then(function(api) {
+                    return apis.getDevice(node.api, node.deviceId).then(function (dev) {
+                        
                         var streamName = node.stream
+                        var stream = null
                         if(msg.topic) {
-                            stream = so.stream(msg.topic)
+                            stream = dev.getStream(msg.topic)
                             if(stream) {
                                 streamName = msg.topic
                             }
                         }
 
                         if(!stream) {
-                            stream = so.stream(streamName)
+                            stream = dev.getStream(streamName)
                         }
 
                         if(!stream) {
-                            return Promise.reject(new Error("Stream '" + streamName + "' not found in " + so.name))
+                            return Promise.reject(new Error("Stream '" + streamName + "' not found in " + dev.name))
                         }
 
-                        dbg("Push data to " + so.id + "." + streamName)
+                        dbg("Push data to " + dev.id + "." + streamName)
                         dbg(JSON.stringify(channelsData))
 
-                        if(channelsData.lastUpdate) {
-                            timestamp = new Date(channelsData.lastUpdate)
-                            channelsData = channelsData.channels
-                        }
+                        timestamp = (channelsData.timestamp && channelsData.channels) ? channelsData.timestamp : timestamp
+                        var data = channelsData.channels ? channelsData.channels : channelsData
 
-                        return stream.push(channelsData, timestamp)
-                    })
-                    .then(function (res) {
+                        var Record = require("raptor-sdk").models.Record
+                        var r = new Record({ channels: data, timestamp }, stream)
+
+                        return api.Stream().push(r)
+                    }).then(function (res) {
                         dbg("Data sent to " + node.deviceId)
                         dbg(JSON.stringify(res))
-                    })
-                    .catch(function (err) {
+                    }).catch(function (err) {
                         node.error(err)
                     })
+                })
 
             } else {
                 node.warn("Payload data cannot be read, push skipped")
