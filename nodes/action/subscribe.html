@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('subscribe-action', {
+        category: 'raptor',
+        color: '#CCFFFF',
+        defaults: {
+            api: { value: "", type:"raptor-config" },
+            deviceId: { value: "", required: false },
+            name: { value: "" },
+            action: { value: "" }
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: "white-globe.png",
+        label: function () {
+
+            var label = null;
+
+            if(this.name) {
+                label = this.name + (this.action ? "." + this.action : "")
+            }
+
+            if(!label) {
+                label = this.action ? this.action : 'action';
+            }
+
+            var deviceId = this.deviceId ? this.deviceId : null;
+
+            if(!deviceId && this.api) {
+                var _config = RED.nodes.node(this.api);
+                deviceId = _config.deviceId ? _config.deviceId : null;
+            }
+
+            if(!label) {
+                label = deviceId ? deviceId.substr(0, 5) + '..' : null;
+            }
+
+            return 'Subscribe '+label;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="subscribe-action">
+
+    <div class="form-row">
+        <label for="node-input-api"><i class="icon-tag"></i> API</label>
+        <input type="text" id="node-input-api" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceId"><i class="icon-tag"></i> Device ID</label>
+        <input type="text" id="node-input-deviceId" placeholder="Object ID">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-action"><i class="icon-tag"></i> Action</label>
+        <input type="text" id="node-input-action" placeholder="Action">
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="subscribe-data">
+
+    <p>Subscribe to a device action and notify when it get triggered updates</p>
+
+</script>

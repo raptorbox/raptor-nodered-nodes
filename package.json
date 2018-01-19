@@ -24,6 +24,7 @@
       "create-device": "nodes/inventory/create.js",
       "read-device": "nodes/inventory/read.js",
       "invoke-action": "nodes/action/invoke.js",
+      "subscribe-action": "nodes/action/subscribe.js",
       "send-data": "nodes/stream/push.js",
       "read-data": "nodes/stream/pull.js",
       "subscribe-data": "nodes/stream/subscribe.js",

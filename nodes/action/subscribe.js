@@ -1,13 +1,14 @@
 var apis = require("../../lib/apis")
 var Promise = require("bluebird")
-var dbg = require("debug")("raptor:nodes:stream:subscribe")
+var dbg = require("debug")("raptor:nodes:action:subscribe")
 
 module.exports = function (RED) {
 
     // track subscriptions and unsubscribe on exit
     var unsubscriptions = []
 
-    function StreamSubscribe(config) {
+    function ActionSubscribe(config) {
+
         config = config || {}
         RED.nodes.createNode(this, config)
 
@@ -16,7 +17,7 @@ module.exports = function (RED) {
         node.api = node.api || {}
         node.name = config.name
         node.deviceId = config.deviceId || node.api.deviceId
-        node.stream = config.stream ? config.stream : null
+        node.action = config.action ? config.action : null
 
         node.api = RED.nodes.getNode(config.api) || {}
 
@@ -25,22 +26,22 @@ module.exports = function (RED) {
             return
         }
 
-        if(!node.stream) {
-            node.error("stream name must be specified")
+        if(!node.action) {
+            node.error("action name must be specified")
             return
         }
 
         apis.getDevice(node.api, node.deviceId).then(function (so) {
             return apis.get(node.api).then(function(api) {
 
-                var streamName = node.stream
-                var stream = so.getStream(streamName)
+                var actionName = node.action
+                var action = so.getAction(actionName)
 
-                if(!stream) {
-                    return Promise.reject(new Error("Stream '" + streamName + "' not found in " + so.name))
+                if(!action) {
+                    return Promise.reject(new Error("Action '" + actionName + "' not found in " + so.name))
                 }
 
-                dbg("Subscribing to " + streamName)
+                dbg("Subscribing to " + actionName)
 
                 var fn = function (data) {
                     node.send({
@@ -49,29 +50,24 @@ module.exports = function (RED) {
                 }
 
                 unsubscriptions.push(function() {
-                    return api.Stream().unsubscribe(stream, fn)
+                    return api.Action().unsubscribe(action, fn)
                 })
 
-                return api.Stream().subscribe(stream, fn)
+                return api.Action().subscribe(action, fn)
             })
         }).catch(function (err) {
             node.error(err)
         })
 
         this.on("close", function () {
-
-            // tidy up any state
-            dbg("Closing node")
-
             Promise.join(unsubscriptions.map(function(fn) {
                 return fn()
             })).then(function() {
                 dbg("All unsubscribed")
             })
-
         })
 
     }
 
-    RED.nodes.registerType("subscribe-data", StreamSubscribe)
+    RED.nodes.registerType("subscribe-action", ActionSubscribe)
 }
