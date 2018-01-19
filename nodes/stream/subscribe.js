@@ -1,5 +1,4 @@
 var apis = require("../../lib/apis")
-var util = require("../../lib/util")
 
 var Promise = require("bluebird")
 
@@ -34,7 +33,7 @@ module.exports = function (RED) {
         }
 
         apis.getDevice(node.api, node.deviceId).then(function (so) {
-            return apis.get(node.api).then((api) =>  {
+            return apis.get(node.api).then(function(api) {
 
                 var streamName = node.stream
                 var stream = so.getStream(streamName)

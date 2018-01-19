@@ -4,7 +4,7 @@
   "description": "Raptor nodes for node-red",
   "dependencies": {
     "debug": "^3.1.0",
-    "raptor-sdk": "^5.0.20"
+    "raptor-sdk": "^5.0.24"
   },
   "scripts": {
     "release": "./node_modules/.bin/standard-version --release-as minor"
